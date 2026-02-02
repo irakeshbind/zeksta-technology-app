@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const User = require("../models/User.js");
 router.post("/sginup", (req, res) => {
-  res.status(200).json({
-    message: "signup succes",
-  });
+  
 });
 
 router.post("/login", (req, res) => {
