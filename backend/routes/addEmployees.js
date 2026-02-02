@@ -36,5 +36,32 @@ try{
 }
 })
 
+// updated empoyee 
+router.put('/updateemployees/:id',async (req,res)=>{
+       try{
+        const updateData = await EmpAdd.findByIdAndUpdate(req.params.id,
+        {
+            name:req.body.name,
+            email:req.body.email,
+            address:req.body.address,
+            phone:req.body.phone
+        },{new:true});
+
+
+        if(!updateData){
+            res.status(400).json({
+                messge:"employee not found"
+            })
+        }
+        res.status(200).json({
+            messgage:'updated succesfully',
+            data:updateData
+        })
+
+       }catch(err){
+        console.log(err);
+       }
+})
+
 
 module.exports = router;
