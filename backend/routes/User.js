@@ -51,6 +51,14 @@ router.post("/login", async (req, res) => {
           message:"invalid password"
         })
        }
+
+              //  compare password 
+       const isvalid= await bcrypt.compare(password,users.password);
+       if(!isvalid){
+        res.status(400).json({
+          message :"user not found or invalid credential"
+        })
+       }
         
 
 })
