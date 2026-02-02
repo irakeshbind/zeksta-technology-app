@@ -40,4 +40,8 @@ router.post("/signup", async (req, res) => {
 
 //  login api
 
+
+router.post("/login", async (req, res) => {
+})
+
 module.exports = router;
