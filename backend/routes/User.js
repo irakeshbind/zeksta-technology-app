@@ -2,11 +2,13 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/User.js");
+const jwt = require("jsonwebtoken");
 
+// signup api
 router.post("/signup", async (req, res) => {
   try {
     // email validation
-    const email= req.body.email;
+    const email = req.body.email;
     const users = await User.findOne({ email });
     if (users) {
       return res.status(400).json({ message: "Email already registered" });
@@ -35,5 +37,7 @@ router.post("/signup", async (req, res) => {
     console.log(err);
   }
 });
+
+//  login api
 
 module.exports = router;
