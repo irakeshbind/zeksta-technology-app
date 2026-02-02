@@ -5,6 +5,7 @@ const bodyParser= require('body-parser');
 
 // import it is file routes
 const userRouter = require("./routes/user.js");
+const addEmployeeRouter= require('./routes/addEmployees.js')
 const mongoose = require("mongoose");
 const connectWithDatabase = async () => {
   try {
@@ -19,5 +20,6 @@ connectWithDatabase();
 app.use(bodyParser.json());
 // it is use this router
 app.use("/api", userRouter);
+app.use('/addEmp',addEmployeeRouter);
 
 module.exports = app;

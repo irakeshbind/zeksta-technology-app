@@ -1,10 +1,10 @@
-const mongoose= require('mpongoose')
-const addEmployee = new mongoose.Schema({
-     // id: { type: mongoose.Schema.Types.ObjectId },
-     name:{type:string,require:true},
-     email:{type:String, require:true},
-     address:{type:String, require:true},
-     phone:{type:String, require:true},
+const mongoose = require("mongoose");
+const addEmp = new mongoose.Schema({
+  // id: { type: mongoose.Schema.Types.ObjectId },
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  address: {type: String,required: true},
 
-})
-module.exports = mongoose.model('addEmployees',addEmployee);
+  phone: { type: String, requiredd: true },
+});
+module.exports = mongoose.model("addEmployee", addEmp);
