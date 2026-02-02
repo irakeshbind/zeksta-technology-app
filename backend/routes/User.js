@@ -42,6 +42,17 @@ router.post("/signup", async (req, res) => {
 
 
 router.post("/login", async (req, res) => {
+       const {email,password}= req.body;
+       const users = await User.findOne({email})
+
+        // find user
+       if(!users){
+        res.status(200).json({
+          message:"invalid password"
+        })
+       }
+        
+
 })
 
 module.exports = router;
