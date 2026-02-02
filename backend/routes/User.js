@@ -40,27 +40,56 @@ router.post("/signup", async (req, res) => {
 
 //  login api
 
-
 router.post("/login", async (req, res) => {
-       const {email,password}= req.body;
-       const users = await User.findOne({email})
+  try{
 
-        // find user
-       if(!users){
-        res.status(200).json({
-          message:"invalid password"
-        })
-       }
+  
+  const { email, password } = req.body;
+  const users = await User.findOne({ email });
 
-              //  compare password 
-       const isvalid= await bcrypt.compare(password,users.password);
-       if(!isvalid){
-        res.status(400).json({
-          message :"user not found or invalid credential"
-        })
-       }
-        
+  // find user
+  if (!users) {
+    res.status(200).json({
+      message: "invalid password",
+    });
+  }
 
-})
+  //  compare password
+  const isvalid = await bcrypt.compare(password, users.password);
+  if (!isvalid) {
+    res.status(400).json({
+      message: "user not found or invalid credential",
+    });
+  }
+
+  //  generate token
+  const token = jwt.sign(
+    {
+      name: users.name,
+      email: users.email,
+      phone: users.phone,
+      address: users.address,
+    },
+    "sbs online",
+    {
+      expiresIn: "1h",
+    },
+  );
+  res.status(200).json({
+    message:"Login successfully",
+    name: users.name,
+    email: users.email,
+    phone: users.phone,
+    address: users.address,
+    token:token
+  })
+}
+catch(err){
+ console.log(err)
+ res.status(400).json({
+  message:"internal server error"
+ })
+  }
+});
 
 module.exports = router;
