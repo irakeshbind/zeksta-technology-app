@@ -1,11 +1,22 @@
-const express = require('express');
+const express = require("express");
 const app = express();
+require("dotenv").config();
+
 // import it is file routes
-const userRouter= require('./routes/User.js');
+const userRouter = require("./routes/User.js");
+const mongoose = require("mongoose");
+const connectWithDatabase = async () => {
+  try {
+    // console.log(process.env.TOKEN_KEY)
+    await mongoose.connect(process.env.mongo_URL);
+    console.log("connected with databases");
+  } catch (err) {
+    console.log("databse is not connect");
+  }
+};
+connectWithDatabase();
 
-// it is use thhis router
-app.use('/api',userRouter);
+// it is use this router
+app.use("/api", userRouter);
 
-module.exports=app;
-
-
+module.exports = app;
