@@ -1,5 +1,8 @@
 const http = require("http");
-const server = http.createServer();
+// import it is in this file app
+const app= require('./app')
+const server = http.createServer(app);
+
 require("dotenv").config();
 const PORT = process.env.PORT;
 
