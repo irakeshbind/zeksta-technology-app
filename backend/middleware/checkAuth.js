@@ -1,4 +1,4 @@
-
+// middleware  create and jwto token verify
 const jwt = require("jsonwebtoken");
 
 const checkoutAuth = (req, res, next) => {

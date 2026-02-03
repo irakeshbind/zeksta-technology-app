@@ -3,16 +3,20 @@ const router = express.Router();
 const EmpAdd = require("../models/AddEmployees.js");
 const checkoutAuth = require("../middleware/checkAuth.js");
 // add empoyee  api
-router.post("/addEmployees", checkoutAuth, async (req, res) => {
+router.post("/addEmployees",checkoutAuth, async (req, res) => {
   try {
     const addEmp = new EmpAdd({
       name: req.body.name,
       email: req.body.email,
       address: req.body.address,
       phone: req.body.phone,
+      
     });
+
     const addData = await addEmp.save();
-    res.status(200).json({
+
+    res.status(201).json({
+      success: true,
       data: addData,
     });
   } catch (err) {
@@ -20,9 +24,13 @@ router.post("/addEmployees", checkoutAuth, async (req, res) => {
   }
 });
 
+
+
+
+
 //  get employees data api
 //
-router.get("/getAllEmployee", async (req, res) => {
+router.get("/getAllEmployee", checkoutAuth, async (req, res) => {
   try {
     const getData = await EmpAdd.find();
     res.status(200).json({
@@ -33,11 +41,44 @@ router.get("/getAllEmployee", async (req, res) => {
   }
 });
 
+
+
+
+
+// get by id
+router.get("/getAllEmployeebyid/:id", checkoutAuth, async (req, res) => {
+  try {
+    const getData = await EmpAdd.findById(req.params.id);
+req
+    if (!getData) {
+      return res.status(404).json({
+        message: "Employee not found",
+      });
+    }
+
+    res.status(200).json({
+      getEmployees: getData,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+});
+
+
+
+
+
+
+
+
 // updated employees by id
-router.put("/updateemployees/:id", async (req, res) => {
+router.put("/updateemployees/:id", checkoutAuth, async (req, res) => {
   try {
     const updateData = await EmpAdd.findByIdAndUpdate(
-      req.params.id,
+       req.params.id,
       {
         name: req.body.name,
         email: req.body.email,
@@ -61,9 +102,10 @@ router.put("/updateemployees/:id", async (req, res) => {
   }
 });
 //  delete employee by id
-router.delete("/deleteEmployee/:id", async (req, res) => {
+router.delete("/deleteEmployee/:id", checkoutAuth, async (req, res) => {
   try {
-    const deleteData = await EmpAdd.findByIdAndDelete(req.params.id);
+    const deleteData = await EmpAdd.findByIdAndDelete({  _id: req.params.id,
+      Uid: req.user.id,});
     res.status(200).json({
       delete: deleteData,
     });
@@ -71,4 +113,6 @@ router.delete("/deleteEmployee/:id", async (req, res) => {
     console.log(err);
   }
 });
+
+
 module.exports = router;
