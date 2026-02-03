@@ -68,7 +68,7 @@ router.post("/login", async (req, res) => {
         phone: users.phone,
         address: users.address,
       },
-      "sbs online",
+      process.env.JWT_SECRET,
       {
         expiresIn: "1h",
       },

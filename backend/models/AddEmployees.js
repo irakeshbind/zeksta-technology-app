@@ -4,7 +4,7 @@ const addEmp = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   address: {type: String,required: true},
-
   phone: { type: String, requiredd: true },
+
 });
 module.exports = mongoose.model("addEmployee", addEmp);

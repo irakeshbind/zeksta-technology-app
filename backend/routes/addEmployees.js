@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const EmpAdd = require("../models/AddEmployees.js");
-
+const checkoutAuth = require("../middleware/checkAuth.js");
 // add empoyee  api
-router.post("/addEmployees", async (req, res) => {
+router.post("/addEmployees", checkoutAuth, async (req, res) => {
   try {
     const addEmp = new EmpAdd({
       name: req.body.name,
@@ -33,7 +33,7 @@ router.get("/getAllEmployee", async (req, res) => {
   }
 });
 
-// updated empoyee
+// updated employees by id
 router.put("/updateemployees/:id", async (req, res) => {
   try {
     const updateData = await EmpAdd.findByIdAndUpdate(
@@ -60,13 +60,13 @@ router.put("/updateemployees/:id", async (req, res) => {
     console.log(err);
   }
 });
-
+//  delete employee by id
 router.delete("/deleteEmployee/:id", async (req, res) => {
   try {
     const deleteData = await EmpAdd.findByIdAndDelete(req.params.id);
     res.status(200).json({
-        delete:deleteData
-    })
+      delete: deleteData,
+    });
   } catch (err) {
     console.log(err);
   }
